@@ -8,10 +8,13 @@ import { Outlet } from 'react-router-dom'
 function App() {
 
   return (
-    <>
+    <div>
       <Navbar/>
-      <Outlet/>
-    </>
+      <div className='px-2 py-1'>
+        <Outlet/>
+      </div>
+      
+    </div>
   )
 }
 

@@ -81,8 +81,8 @@ const Navbar = () => {
               </div>
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <form class="max-w-sm mx-auto">
-                  <select id="duration" class="font-semibold bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-200 block w-full p-2.5 dark:bg-white dark:border-blue-300 dark:placeholder-gray-400 dark:text-gray-500 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <form className="max-w-sm mx-auto">
+                  <select id="duration" className="font-semibold bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-200 block w-full p-2.5 dark:bg-white dark:border-blue-300 dark:placeholder-gray-400 dark:text-gray-500 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected>Last 5 minutes</option>
                     <option value="15">Last 15 minutes</option>
                     <option value="30">Last 30 minutes</option>
