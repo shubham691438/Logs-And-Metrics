@@ -11,6 +11,7 @@ const Metrics = () => {
     async function fetchMetrics() {
       try {
         const metrics = await MimicMetrics.fetchMetrics({ startTs: Date.now() -900000, endTs: Date.now() });
+        // const metrics = await MimicMetrics.fetchMetrics({ startTs: Date.now() -21600000, endTs: Date.now() });
         console.log("metrics",metrics)
         setMetrics(metrics);
       } catch (error) {
@@ -35,24 +36,32 @@ const Metrics = () => {
         {
           metrics.length>0 && (
             <div className="grid grid-cols-2 gap-4">
-              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md'>
+              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
                 <ChartComponent data={metrics[0]}/>
               </div>
               
-              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md'>02</div>
+              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
+                <ChartComponent data={metrics[1]}/>
+              </div>
 
-              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md'>03</div>
+              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
+                <ChartComponent data={metrics[2]}/>
+              </div>
               
-              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md'>04</div>
+              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
+                <ChartComponent data={metrics[3]}/>
+              </div>
             </div>
           )
         }
         
       </div>
 
-      {/* <div>
-        <ChartComponent data={metrics}/>
-      </div> */}
+      {/* {metrics.length>0 && (
+            
+                <ChartComponent data={metrics[0]}/>)
+             
+      } */}
 
     </div>
   )
