@@ -1,17 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Navbar from './components/Navbar'
 import './App.css'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useParams,useNavigate } from 'react-router-dom'
 
-function App() {
+function App() {  
 
+  //default time range 5 min
+  const [selectedTimeRange,setSelectedTimeRange]= useState(5)
+  const [selectionTime,setSelectionTime]=useState(Date.now())
+
+
+  
+  const setChanges=(timeRange,time)=>{
+    console.log("shubham",timeRange,time)
+    setSelectedTimeRange(timeRange);
+    setSelectionTime(time);
+  }
   return (
     <div>
-      <Navbar/>
+      <Navbar selectedTimeRange={selectedTimeRange} setChanges={setChanges}/>
       <div className='px-2 py-1'>
-        <Outlet/>
+        <Outlet context={[selectedTimeRange,selectionTime,setChanges]}/>
       </div>
       
     </div>

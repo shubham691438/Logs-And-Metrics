@@ -1,16 +1,34 @@
 import React,{useState,useEffect} from 'react'
 import {MimicMetrics} from '../api-mimic.js'
 import ChartComponent from './ChartComponent.jsx';
+import { useNavigate,useOutletContext, useParams } from 'react-router-dom';
 
 const Metrics = () => {
-
+  
+  const {timeRange,time}=useParams();
+  const navigate = useNavigate();
   const [metrics, setMetrics] = useState([]);
+  const [selectedTimeRange,selectionTime,setChanges]=useOutletContext();
+
+  useEffect(()=>{
+    if(timeRange && time)
+    {
+      setChanges(timeRange,time);
+    }
+  },[])
+
+  useEffect(()=>{
+    
+    navigate(`/metrics/${selectedTimeRange}/${selectionTime}`)
+  },[selectedTimeRange])
+
+
 
   useEffect(() => {
   
     async function fetchMetrics() {
       try {
-        const metrics = await MimicMetrics.fetchMetrics({ startTs: Date.now() -900000, endTs: Date.now() });
+        const metrics = await MimicMetrics.fetchMetrics({ startTs: selectionTime - 1000*60*selectedTimeRange, endTs: Date.now() });
         // const metrics = await MimicMetrics.fetchMetrics({ startTs: Date.now() -21600000, endTs: Date.now() });
         console.log("metrics",metrics)
         setMetrics(metrics);
@@ -20,7 +38,9 @@ const Metrics = () => {
     }
 
     fetchMetrics();
-  }, []);
+  }, [selectedTimeRange,navigate]);
+
+  
 
   return (
     <div>

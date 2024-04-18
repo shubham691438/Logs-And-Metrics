@@ -11,11 +11,11 @@ const  routes=createBrowserRouter([
       element: <App/>,
       children:[
         {
-          path:'metrics',
+          path:'metrics/:timeRange?/:time?',
           element:<Metrics/>
         },
         {
-          path:'logs',
+          path:'logs/:timeRange?/:time?',
           element:<Logs/>
         },
         {
