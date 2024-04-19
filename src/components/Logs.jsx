@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useRef} from 'react'
 import { MimicLogs } from '../api-mimic';
 import { format } from 'date-fns';
 import { useNavigate, useParams,useOutletContext } from 'react-router-dom';
@@ -8,6 +8,8 @@ const Logs = () => {
   const [startTime,setStartTime]=useState(0);
   const [endTime,setEndTime]=useState(0);
   const [logs, setLogs] = useState([]);
+
+  const logContainerRef = useRef(null);
 
   const [searchParams,setChanges]=useOutletContext();
 
@@ -43,6 +45,20 @@ const Logs = () => {
     };
   }, [searchParams]);
 
+  useEffect(() => {
+    const logContainer = logContainerRef.current;
+    // Check if user is at the bottom of the scrollable area
+
+    console.log(logContainer.scrollTop + logContainer.clientHeight,logContainer.scrollHeight);
+    const atBottom = (logContainer.scrollTop + logContainer.clientHeight+100) >= logContainer.scrollHeight;
+    
+    console.log("atBottom",atBottom)
+    // If user is at the bottom, scroll to the latest log
+    if (atBottom) {
+      logContainer.scrollTop = logContainer.scrollHeight;
+    }
+  }, [logs]);
+
   return (
     <div className='bg-white  rounded-md border-2 border-gray-100'>
       <div className='flex justify-end pr-5 '>
@@ -50,8 +66,8 @@ const Logs = () => {
           {logs.length > 0 && `Showing logs for ${startTime} → ${endTime}`}
         </span>
       </div>
-      <div className='bg-[#090f17] min-h-[595px] mt-4 mb-9 mx-3 rounded-md border-2 border-gray-100'>
-        <ul className='text-white '>
+      <div ref={logContainerRef} className='bg-[#090f17] h-[595px] overflow-y-auto mt-4 mb-9 mx-3 rounded-md border-2 border-gray-100 p-2'>
+        <ul className='text-white ' >
           {logs.map((log, index) => (
               <li key={index} className='px-2'> 
                 {
