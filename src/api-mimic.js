@@ -33,9 +33,11 @@ Aliquam et consectetur ante. Vivamus aliquet neque nec congue tincidunt. Etiam m
 Integer quis ipsum eu risus hendrerit porta nec eget nisi. Praesent consectetur commodo sem, a posuere magna euismod nec. Aenean non ornare sapien. Cras in ultricies massa. Etiam tortor ante, maximus vitae rhoncus non, vehicula in erat.`;
 
 const getRandomLog = () => {
-  const randomIndex = Math.floor(Math.random() * LOREM_IPSUM_TEXT.length - 50);
-  const logLength = 50 + Math.floor(Math.random() * 700);
-  return LOREM_IPSUM_TEXT.slice(randomIndex, randomIndex + logLength);
+  const words = LOREM_IPSUM_TEXT.split(' ');
+  const randomIndex = Math.floor(Math.random() * (words.length - 50));
+  const logLength =15 + Math.floor(Math.random() * 10);
+  const randomWords = words.slice(randomIndex, randomIndex + logLength);
+  return randomWords.join(' ');
 };
 
 export class MimicLogs {
