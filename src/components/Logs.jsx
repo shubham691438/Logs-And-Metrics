@@ -20,7 +20,8 @@ const Logs = () => {
     async function fetchLogs() {
       try {
         console.log("timeRange",searchParams.get('timeRange'),searchParams.get('time'))
-        const logs = await MimicLogs.fetchPreviousLogs({ startTs: searchParams.get('time') - 1000*60*searchParams.get('timeRange'), endTs: searchParams.get('time') });
+        const logs = await MimicLogs.fetchPreviousLogs({ startTs: searchParams.get('time') - 1000*60*searchParams.get('timeRange'), endTs: searchParams.get('time'),limit:10 });
+        logs.reverse();
         console.log("logs",logs);
         setLogs(logs);
         
