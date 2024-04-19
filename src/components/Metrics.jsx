@@ -1,38 +1,24 @@
 import React,{useState,useEffect} from 'react'
 import {MimicMetrics} from '../api-mimic.js'
 import ChartComponent from './ChartComponent.jsx';
-import { useNavigate,useOutletContext, useParams } from 'react-router-dom';
+import {useOutletContext } from 'react-router-dom';
 import { format } from 'date-fns';
 
 const Metrics = () => {
-  
-  const {timeRange,time}=useParams();
-  const navigate = useNavigate();
   const [metrics, setMetrics] = useState([]);
   const [startTime,setStartTime]=useState(0);
   const [endTime,setEndTime]=useState(0);
+  
+  const [searchParams,setChanges]=useOutletContext();
 
-  const [selectedTimeRange,selectionTime,setChanges]=useOutletContext();
-
-  useEffect(()=>{
-    if(timeRange && time)
-    {
-      setChanges(timeRange,time);
-    }
-  },[])
-
-  useEffect(()=>{
-    
-    navigate(`/metrics/${selectedTimeRange}/${selectionTime}`)
-  },[selectedTimeRange])
-
+ 
 
 
   useEffect(() => {
   
     async function fetchMetrics() {
       try {
-        const metrics = await MimicMetrics.fetchMetrics({ startTs: selectionTime - 1000*60*selectedTimeRange, endTs: Date.now() });
+        const metrics = await MimicMetrics.fetchMetrics({ startTs: searchParams.get('time') - 1000*60*searchParams.get('timeRange'), endTs: searchParams.get('time') });
         // const metrics = await MimicMetrics.fetchMetrics({ startTs: Date.now() -21600000, endTs: Date.now() });
         console.log("metrics",metrics)
 
@@ -52,7 +38,7 @@ const Metrics = () => {
     }
 
     fetchMetrics();
-  }, [selectedTimeRange,navigate]);
+  }, [searchParams]);
 
   
 
@@ -75,19 +61,19 @@ const Metrics = () => {
         {
           metrics.length>0 && (
             <div className="grid grid-cols-2 gap-4">
-              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
+              <div className='bg-white  border-2 border-blue-200 rounded-md p-3'>
                 <ChartComponent data={metrics[0]}/>
               </div>
               
-              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
+              <div className='bg-white  border-2 border-blue-200 rounded-md p-3'>
                 <ChartComponent data={metrics[1]}/>
               </div>
 
-              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
+              <div className='bg-white  border-2 border-blue-200 rounded-md p-3'>
                 <ChartComponent data={metrics[2]}/>
               </div>
               
-              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
+              <div className='bg-white  border-2 border-blue-200 rounded-md p-3'>
                 <ChartComponent data={metrics[3]}/>
               </div>
             </div>
@@ -95,14 +81,7 @@ const Metrics = () => {
         }
         
       </div>
-
-      {/* {metrics.length>0 && (
-            
-                <ChartComponent data={metrics[0]}/>)
-             
-      } */}
-
-      
+     
 
     </div>
   )

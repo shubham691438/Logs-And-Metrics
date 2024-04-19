@@ -3,26 +3,32 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Navbar from './components/Navbar'
 import './App.css'
-import { Outlet, useParams,useNavigate } from 'react-router-dom'
-import { format } from 'date-fns';
+import { Outlet, useParams,useNavigate, useSearchParams } from 'react-router-dom'
+
 
 function App() {  
 
-  //default time range 5 min
-  const [selectedTimeRange,setSelectedTimeRange]= useState(5)
-  const [selectionTime,setSelectionTime]=useState(Date.now())
-
+  //default time range 5 min and date as current date
+   const [searchParams,setSearchParams]=useSearchParams({timeRange:5,time:Date.now()})
 
   
   const setChanges=(timeRange,time)=>{
-    setSelectedTimeRange(timeRange);
-    setSelectionTime(time);
+    setSearchParams((prev)=>{
+      prev.set('timeRange',timeRange);
+      prev.set('time',time)
+      return prev
+    })
   }
+
+  // useEffect(()=>{
+  //   setChanges(searchParams.get('timeRange'),searchParams.get('time'));
+  // },[])
+
   return (
     <div>
-      <Navbar selectedTimeRange={selectedTimeRange} setChanges={setChanges}/>
+      <Navbar searchParams={searchParams} setChanges={setChanges}/>
       <div >
-        <Outlet context={[selectedTimeRange,selectionTime,setChanges]}/>
+        <Outlet context={[searchParams,setChanges]}/>
       </div>
       
     </div>

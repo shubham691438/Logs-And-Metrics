@@ -1,17 +1,30 @@
 import React,{useState,useEffect} from 'react'
 import { MimicLogs } from '../api-mimic';
 import { format } from 'date-fns';
+import { useNavigate, useParams,useOutletContext } from 'react-router-dom';
 
 const Logs = () => {
+  
+  const [startTime,setStartTime]=useState(0);
+  const [endTime,setEndTime]=useState(0);
   const [logs, setLogs] = useState([]);
+
+  const [searchParams,setChanges]=useOutletContext();
+
+ 
 
   useEffect(() => {
     // Fetch logs when the component mounts
     async function fetchLogs() {
       try {
-        const logs = await MimicLogs.fetchPreviousLogs({ startTs: Date.now() - 86400000, endTs: Date.now(), limit: 10 });
+        console.log("timeRange",searchParams.get('timeRange'),searchParams.get('time'))
+        const logs = await MimicLogs.fetchPreviousLogs({ startTs: searchParams.get('time') - 1000*60*searchParams.get('timeRange'), endTs: searchParams.get('time') });
         console.log("logs",logs);
         setLogs(logs);
+        
+        
+        setStartTime(format(new Date(parseInt(searchParams.get('time') - 1000*60*searchParams.get('timeRange'))),'dd/MM/yyyy HH:mm'));
+        setEndTime(format(new Date(parseInt(searchParams.get('time'))),'dd/MM/yyyy HH:mm'));
       } catch (error) {
         console.error('Error fetching logs:', error);
       }
@@ -28,11 +41,16 @@ const Logs = () => {
     return () => {
       unsubscribe(); // Unsubscribe from live logs when the component unmounts
     };
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className='bg-white  rounded-md border-2 border-gray-100'>
-      <div className='bg-[#090f17] min-h-[600px] mt-6 mb-9 mx-3 rounded-md border-2 border-gray-100'>
+      <div className='flex justify-end pr-5 '>
+        <span className='text-xs font-semibold text-gray-600 h-3 pt-2' >
+          {logs.length > 0 && `Showing logs for ${startTime} → ${endTime}`}
+        </span>
+      </div>
+      <div className='bg-[#090f17] min-h-[595px] mt-4 mb-9 mx-3 rounded-md border-2 border-gray-100'>
         <ul className='text-white '>
           {logs.map((log, index) => (
               <li key={index} className='px-2'> 

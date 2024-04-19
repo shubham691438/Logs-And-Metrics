@@ -11,7 +11,7 @@ const  routes=createBrowserRouter([
       element: <App/>,
       children:[
         {
-          path:'metrics/:timeRange?/:time?',
+          path:'metrics',
           element:<Metrics/>
         },
         {

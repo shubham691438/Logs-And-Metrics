@@ -9,15 +9,15 @@ import activeLogsLogo from '../assets/logs-active.png';
 import inactiveLogsLogo from '../assets/logs-inactive.png';
 
 const navigation = [
-  { name: 'Metrics', to: `/metrics/5/${Date.now()}`, current: false, activeLogo: activeMetricsLogo, inactiveLogo: inactiveMetricsLogo },
-  { name: 'Logs', to: `/logs/5/${Date.now()}`, current: false, activeLogo: activeLogsLogo, inactiveLogo: inactiveLogsLogo },
+  { name: 'Metrics', to: `/metrics`, current: false, activeLogo: activeMetricsLogo, inactiveLogo: inactiveMetricsLogo },
+  { name: 'Logs', to: `/logs`, current: false, activeLogo: activeLogsLogo, inactiveLogo: inactiveLogsLogo },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const Navbar = ({selectedTimeRange,setChanges}) => {
+const Navbar = ({searchParams,setChanges}) => {
   const location = useLocation();
   const [currentNavItem, setCurrentNavItem] = useState(navigation);
 
@@ -82,7 +82,7 @@ const Navbar = ({selectedTimeRange,setChanges}) => {
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <form className="max-w-sm mx-auto">
-                  <select value={selectedTimeRange} onChange={(e)=>{setChanges(e.target.value,Date.now())}} id="duration" className="font-semibold bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-200 block w-full p-2.5 dark:bg-white dark:border-blue-300 dark:placeholder-gray-400 dark:text-gray-500 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <select value={searchParams.get('timeRange')} onChange={(e)=>{setChanges(e.target.value,Date.now())}} id="duration" className="font-semibold bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-200 block w-full p-2.5 dark:bg-white dark:border-blue-300 dark:placeholder-gray-400 dark:text-gray-500 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected value={5} >Last 5 minutes</option>
                     <option value={15}>Last 15 minutes</option>
                     <option value={30}>Last 30 minutes</option>
