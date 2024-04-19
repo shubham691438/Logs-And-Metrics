@@ -14,14 +14,13 @@ function App() {
 
   
   const setChanges=(timeRange,time)=>{
-    console.log("shubham",timeRange,time)
     setSelectedTimeRange(timeRange);
     setSelectionTime(time);
   }
   return (
     <div>
       <Navbar selectedTimeRange={selectedTimeRange} setChanges={setChanges}/>
-      <div className='px-2 py-1'>
+      <div >
         <Outlet context={[selectedTimeRange,selectionTime,setChanges]}/>
       </div>
       

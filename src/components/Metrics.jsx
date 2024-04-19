@@ -57,9 +57,9 @@ const Metrics = () => {
   
 
   return (
-    <div className='border-2 border-blue-200 rounded-md'>
+    <div className='border-2 border-blue-200 rounded-md mx-2 my-1'>
 
-      <div className='bg-white h-15 border-2 border-blue-300 rounded-t-md flex items-center'> 
+      <div className='bg-white h-15 border-2 border-blue-200 rounded-t-md flex items-center'> 
         <div className='p-3'>
           <span className='text-2xl font-bold'>Metrics</span>  
           {
@@ -75,19 +75,19 @@ const Metrics = () => {
         {
           metrics.length>0 && (
             <div className="grid grid-cols-2 gap-4">
-              <div className='bg-white min-h-80 border-2 border-blue-300 rounded-md p-3'>
+              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
                 <ChartComponent data={metrics[0]}/>
               </div>
               
-              <div className='bg-white min-h-80 border-2 border-blue-300 rounded-md p-3'>
+              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
                 <ChartComponent data={metrics[1]}/>
               </div>
 
-              <div className='bg-white min-h-80 border-2 border-blue-300 rounded-md p-3'>
+              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
                 <ChartComponent data={metrics[2]}/>
               </div>
               
-              <div className='bg-white min-h-80 border-2 border-blue-300 rounded-md p-3'>
+              <div className='bg-white min-h-80 border-2 border-blue-200 rounded-md p-3'>
                 <ChartComponent data={metrics[3]}/>
               </div>
             </div>
