@@ -152,7 +152,7 @@ const ChartComponent = ({ searchParams,setChanges,data }) => {
         transitions: {
             zoom: {
               animation: {
-                duration: 1000*60*60,
+                duration: 1000*60*60*60,
                 easing: 'easeOutCubic'
               }
             }
