@@ -87,6 +87,7 @@ const ChartComponent = ({ searchParams,setChanges,data }) => {
     
     const options = {
         responsive: true,
+        maintainAspectRatio:false,
         plugins: {
             title: {
                 display: true,
