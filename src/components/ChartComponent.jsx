@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { differenceInMinutes } from 'date-fns';
 import 'chartjs-adapter-date-fns';
+import zoomPlugin from 'chartjs-plugin-zoom';
 import { Line } from 'react-chartjs-2';
 import {
     Chart as ChartJs,
@@ -12,6 +14,7 @@ import {
     Legend,
     Filler,
 } from 'chart.js'
+import { Link } from 'react-router-dom';
 
 ChartJs.register(
     TimeScale,
@@ -24,12 +27,17 @@ ChartJs.register(
     Filler
 )
 
+ChartJs.register(zoomPlugin);
 
-
-const ChartComponent = ({ data }) => {
+const ChartComponent = ({ searchParams,setChanges,data }) => {
     
     const chartRef=useRef(null);
     const [gradients,setGradients]=useState([])
+    const [zoomCompleted, setZoomCompleted] = useState(false);
+    
+    const [timeRange,setTimeRange]=useState(0);
+    const [time,setTime]=useState(0);
+
     useEffect(()=>{
         const ctx=chartRef.current.ctx;
         let redGradient = ctx.createLinearGradient(0, 0, 0, 450);
@@ -100,8 +108,54 @@ const ChartComponent = ({ data }) => {
                     },
                 },
 
-            }
+            },
+            zoom: {
+                // pan: {
+                //   enabled:true,
+                //   mode:'x',
+                //   threshold:10,
+                // },
+                
+                zoom: {
+                    mode:'x',
+                    drag:{
+                        enabled:true,
+                        backgroundColor:'#bfdbfe',
+                        borderColor:'#bfdbfe',
+                        borderWidth:1,
+                        // threshold:500,
+                        drawTime:'beforeDraw',
+                        
+                    },
+                    onZoomStart:({chart,event,point})=>{
+                        console.log("start",chart,event,point);
+                    },
+                    onZoom:({chart})=>{
+                        console.log("Zooming",chart)
+                    },
+                    onZoomComplete:({chart})=>{
+                        
+                        let len=chart.scales.x.ticks.length;
+                        setTime(chart.scales.x.ticks[len-1].value)
+                        setTimeRange(differenceInMinutes(chart.scales.x.ticks[len-1].value,chart.scales.x.ticks[0].value));
+
+                        console.log("timeRange",differenceInMinutes(chart.scales.x.ticks[len-1].value,chart.scales.x.ticks[0].value))
+                        console.log("time",chart.scales.x.ticks[len-1].value)
+                        setZoomCompleted(true);
+                        console.log("zoom Complete",chart)
+                    }
+                    
+                }
+              }
         },
+        transitions: {
+            zoom: {
+              animation: {
+                duration: 1000*60*60,
+                easing: 'easeOutCubic'
+              }
+            }
+          },
         scales:{
             x: {
                 type: 'time',
@@ -133,8 +187,23 @@ const ChartComponent = ({ data }) => {
         }
         
     };
-
-    return <Line ref={chartRef} data={chartData} options={options} />;
+    
+    const handleButtonClick = () => {
+        console.log('Button clicked');
+        // Add logic for button click event
+    };
+    return (
+        <>
+            {zoomCompleted && (
+                <div className='absolute z-50 right-12' >
+                    <button type='button' className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-8 focus:ring-gray-300 font-semibold rounded-md text-sm px-2 py-2  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700' onClick={handleButtonClick} >
+                        <Link to={"/logs?timeRange="+timeRange+"&time="+time}>View Logs</Link>
+                    </button>
+                </div>
+            )}
+            <Line ref={chartRef} data={chartData} options={options} />
+        </>
+    );
 };
 
 export default ChartComponent;
