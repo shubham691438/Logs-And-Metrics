@@ -19,7 +19,7 @@ const Logs = () => {
         const logs = await MimicLogs.fetchPreviousLogs({
           startTs: searchParams.get('time') - 1000 * 60 * searchParams.get('timeRange'),
           endTs: searchParams.get('time'),
-          limit: 2
+          limit: 10
         });
         logs.reverse();
         setLogs(logs);
@@ -49,9 +49,9 @@ const Logs = () => {
       setLoading(true);
       const oldestTimestamp = logs[0]?.timestamp;
       const previousLogs = await MimicLogs.fetchPreviousLogs({
-        startTs: oldestTimestamp - 1000 * 60 * searchParams.get('timeRange'), // Fetching logs prior to the oldest log timestamp
+        startTs: oldestTimestamp - 1000 * 60 * 5, // Fetching logs prior to the oldest log timestamp
         endTs: oldestTimestamp,
-        limit: 10 
+        limit: 5 
       });
       previousLogs.reverse();
 
