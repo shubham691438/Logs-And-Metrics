@@ -100,14 +100,22 @@ const Logs = () => {
     }
   }, [logs]);
 
+  const scrolToLatestLog=()=>
+  {
+    const logContainer = logContainerRef.current;
+    logContainer.scrollTop = logContainer.scrollHeight;
+  }
   return (
     <div className='bg-white rounded-md border-2 border-gray-100'>
-      <div className='flex justify-end pr-5 '>
-        <span className='text-xs font-semibold text-gray-600 h-3 pt-2'>
+      <div className='flex justify-between  px-5'>
+        <span className='mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-semibold rounded-md text-xs px-4 py-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 '>
+          {logs.length > 0 && <button onClick={scrolToLatestLog}>logs count : {logs.length}</button>}
+        </span>
+        <span className='text-xs font-semibold text-gray-600 h-3 pt-2 '>
           {logs.length > 0 && `Showing logs for ${startTime} → ${endTime}`}
         </span>
       </div>
-      <div ref={logContainerRef} className='bg-[#090f17] h-[595px] overflow-y-auto mt-4 mb-9 mx-3 rounded-md border-2 border-gray-100 p-2'>
+      <div ref={logContainerRef} className='bg-[#090f17] h-[575px] overflow-y-auto mt-2 mb-9 mx-3 rounded-md border-2 border-gray-100 p-2'>
 
       <div className={" justify-center " + (loading ? "flex" : "hidden")}>
         <svg aria-hidden="true" className="w-6 h-5 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
