@@ -6,6 +6,15 @@ This React application allows users to fetch and view system logs and metrics. I
 
 ![App Screenshot](./readme-asset/logs2.png)
 
+## Demo
+
+Live Demo of React App : 
+https://metrics-and-logs.vercel.app/
+
+Live Demo of Storybook : 
+https://story-book-logs-and-metrics.vercel.app/
+
+
 ## Features
 ### Metrics:
 - Four charts (mix of line and area charts) rendered using Chart.js with React.
