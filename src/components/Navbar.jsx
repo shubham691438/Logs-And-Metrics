@@ -16,6 +16,7 @@ import NavItem from './NavItem';
 const navigation = [
   { name: 'Metrics', to: `/metrics`, current: false, activeLogo: activeMetricsLogo, inactiveLogo: inactiveMetricsLogo },
   { name: 'Logs', to: `/logs`, current: false, activeLogo: activeLogsLogo, inactiveLogo: inactiveLogsLogo },
+  { name: 'StoryBook', to: `https://story-book-logs-and-metrics.vercel.app/`, current: false, activeLogo: activeLogsLogo, inactiveLogo: inactiveLogsLogo },
 ];
 
 function classNames(...classes) {
