@@ -16,7 +16,7 @@ const TimeRangeSelect = ({searchParams,setChanges}) => {
   )
 }
 
-// Define PropTypes for Navbar component
+
 TimeRangeSelect.propTypes = {
     searchParams: PropTypes.object.isRequired, 
     setChanges: PropTypes.func.isRequired,
