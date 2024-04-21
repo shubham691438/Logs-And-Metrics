@@ -134,6 +134,12 @@ const ChartComponent = ({ searchParams,setChanges,data }) => {
                     },
                     onZoom:({chart})=>{
                         console.log("Zooming",chart)
+                        let len=chart.scales.x.ticks.length;
+                        setTime(chart.scales.x.ticks[len-1].value)
+                        setTimeRange(differenceInMinutes(chart.scales.x.ticks[len-1].value,chart.scales.x.ticks[0].value));
+
+                        setZoomCompleted(true);
+                        
                     },
                     onZoomComplete:({chart})=>{
                         
@@ -141,8 +147,6 @@ const ChartComponent = ({ searchParams,setChanges,data }) => {
                         setTime(chart.scales.x.ticks[len-1].value)
                         setTimeRange(differenceInMinutes(chart.scales.x.ticks[len-1].value,chart.scales.x.ticks[0].value));
 
-                        console.log("timeRange",differenceInMinutes(chart.scales.x.ticks[len-1].value,chart.scales.x.ticks[0].value))
-                        console.log("time",chart.scales.x.ticks[len-1].value)
                         setZoomCompleted(true);
                         console.log("zoom Complete",chart)
                     }
