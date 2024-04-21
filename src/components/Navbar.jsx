@@ -3,10 +3,15 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, useLocation } from 'react-router-dom';
 import trueFoundryImg from '../assets/TF-logo.svg';
+
 import activeMetricsLogo from '../assets/metrics-active.png';
 import inactiveMetricsLogo from '../assets/metrics-inactive.png';
 import activeLogsLogo from '../assets/logs-active.png';
 import inactiveLogsLogo from '../assets/logs-inactive.png';
+
+import PropTypes from 'prop-types'; 
+import TimeRangeSelect from './TimeRangeSelect';
+import NavItem from './NavItem';
 
 const navigation = [
   { name: 'Metrics', to: `/metrics`, current: false, activeLogo: activeMetricsLogo, inactiveLogo: inactiveMetricsLogo },
@@ -57,40 +62,15 @@ const Navbar = ({searchParams,setChanges}) => {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {currentNavItem.map((item) => (
-                      <Link
-                        key={item.name}
-                        to={item.to}
-                        className={classNames(
-                          item.current ? 'border-b-4 border-b-violet-700': 'text-gray-900 hover:border-b-4 border-b-violet-400',
-                          'rounded px-3 py-2 text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        <div className='flex items-center'>
-                          <img
-                            className="h-4 w-auto"
-                            src={item.current ? item.activeLogo : item.inactiveLogo}
-                          />
-                          <p className='px-2'>{item.name}</p>
-                        </div>
-                      </Link>
+                    {currentNavItem.map((item,key) => (
+                     <NavItem item={item} key={key} classNames={classNames}/>
                     ))}
                   </div>
                 </div>
               </div>
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <form className="max-w-sm mx-auto">
-                  <select value={searchParams.get('timeRange')} onChange={(e)=>{setChanges(e.target.value,Date.now())}} id="duration" className="font-semibold bg-gray-50 border border-blue-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-200 block w-full p-2.5 dark:bg-white dark:border-blue-300 dark:placeholder-gray-400 dark:text-gray-500 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected value={5} >Last 5 minutes</option>
-                    <option value={15}>Last 15 minutes</option>
-                    <option value={30}>Last 30 minutes</option>
-                    <option value={60}>Last 1 hour</option>
-                    <option value={180}>Last 3 hours</option>
-                    <option value={360}>Last 6 hours</option>
-                  </select>
-                </form>
+                <TimeRangeSelect searchParams={searchParams} setChanges={setChanges}/>
               </div>
               
             </div>
@@ -118,5 +98,11 @@ const Navbar = ({searchParams,setChanges}) => {
     </Disclosure>
   )
 }
+
+// Define PropTypes for Navbar component
+Navbar.propTypes = {
+  searchParams: PropTypes.object.isRequired, 
+  setChanges: PropTypes.func.isRequired,
+};
 
 export default Navbar;

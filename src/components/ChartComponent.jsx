@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { differenceInMinutes } from 'date-fns';
 import 'chartjs-adapter-date-fns';
 import zoomPlugin from 'chartjs-plugin-zoom';
@@ -194,7 +195,8 @@ const ChartComponent = ({ searchParams,setChanges,data }) => {
         // Add logic for button click event
     };
     return (
-        <>
+       
+        <div className='bg-white min-h-[280px] border-2 border-blue-200 rounded-md p-3 relative'>
             {zoomCompleted && (
                 <div className='absolute z-50 right-12' >
                     <button type='button' className='text-white bg-gray-800 hover:bg-gray-900 focus:outline-8 focus:ring-gray-300 font-semibold rounded-md text-sm px-2 py-2  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700' onClick={handleButtonClick} >
@@ -203,8 +205,15 @@ const ChartComponent = ({ searchParams,setChanges,data }) => {
                 </div>
             )}
             <Line ref={chartRef} data={chartData} options={options} />
-        </>
+        </div>    
+       
     );
 };
+
+ChartComponent.propTypes = {
+    searchParams: PropTypes.object.isRequired,
+    setChanges: PropTypes.func.isRequired,
+    data: PropTypes.object.isRequired,
+  };
 
 export default ChartComponent;

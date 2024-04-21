@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MimicLogs } from '../api-mimic';
 import { format } from 'date-fns';
 import { useOutletContext } from 'react-router-dom';
+import NewLogButton from './NewLogButton';
 
 const Logs = () => {
   const [startTime, setStartTime] = useState(0);
@@ -174,9 +175,7 @@ const Logs = () => {
       </div>
       {newLogsCnt>0 &&
       <div className='absolute bottom-14 right-12'>
-        <span className='mt-2 focus:outline-none text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:ring-indigo-300 font-semibold rounded-md text-xs px-4 py-2 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-900 '>
-             <button onClick={scrolToLatestLog}>{newLogsCnt} new logs 🡇</button>
-        </span>
+        <NewLogButton scrolToLatestLog={scrolToLatestLog} newLogsCnt={newLogsCnt}/>
       </div>
       }
     </div>

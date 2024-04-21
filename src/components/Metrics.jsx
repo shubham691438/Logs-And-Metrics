@@ -61,21 +61,21 @@ const Metrics = () => {
         {
           metrics.length>0 && (
             <div className="grid grid-cols-2 gap-4 ">
-              <div className='bg-white min-h-[280px] border-2 border-blue-200 rounded-md p-3 relative'>
+              
                 <ChartComponent searchParams={searchParams} setChanges={setChanges} data={metrics[0]}/>
-              </div>
+             
               
-              <div className='bg-white min-h-[280px]  border-2 border-blue-200 rounded-md p-3 relative'>
+              
                 <ChartComponent searchParams={searchParams} setChanges={setChanges} data={metrics[1]}/>
-              </div>
-
-              <div className='bg-white min-h-[280px]  border-2 border-blue-200 rounded-md p-3 relative'>
-                <ChartComponent searchParams={searchParams} setChanges={setChanges} data={metrics[2]}/>
-              </div>
               
-              <div className='bg-white min-h-[280px]  border-2 border-blue-200 rounded-md p-3 relative'>
+
+              
+                <ChartComponent searchParams={searchParams} setChanges={setChanges} data={metrics[2]}/>
+             
+              
+              
                 <ChartComponent searchParams={searchParams} setChanges={setChanges} data={metrics[3]}/>
-              </div>
+              
             </div>
           )
         }
