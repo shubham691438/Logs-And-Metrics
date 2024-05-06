@@ -43,7 +43,12 @@ const Logs = () => {
 
       //check if at bottom with latest log
       const logContainer = logContainerRef.current;
+
+      // scrollTop= top of scrollBar
+      // ClientHeight= height of div
+      // Scroll height = height of scroll area 
       const atBottom = (logContainer.scrollTop + logContainer.clientHeight+100) >= logContainer.scrollHeight;
+
 
   
       if(atBottom) setNewLogsCnt(0);

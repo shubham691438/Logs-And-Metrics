@@ -1,9 +1,8 @@
 import App from "./App"
-import { createBrowserRouter } from "react-router-dom"
 import './index.css'
 import Metrics from "./components/Metrics"
 import Logs from "./components/Logs"
-import { useNavigate } from "react-router-dom";
+import { createBrowserRouter,useNavigate } from "react-router-dom";
 import { useEffect } from "react"
 
 
