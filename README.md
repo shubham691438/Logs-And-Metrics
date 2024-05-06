@@ -2,6 +2,7 @@
 
 ## Overview
 This React application allows users to fetch and view system logs and metrics. It consists of two screens, Logs, and Metrics, which can be toggled between using a Navbar. The application utilizes React Router for SPA navigation.
+
 ![App Screenshot](./readme-asset/metrics2.png)
 
 ![App Screenshot](./readme-asset/logs2.png)
