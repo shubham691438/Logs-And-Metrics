@@ -15,6 +15,7 @@ const Logs = () => {
   const [searchParams, setChanges] = useOutletContext();
 
 
+  //this is to fetch the logs when page render and subscribe to live logs
   useEffect(() => {
     async function fetchLogs() {
       try {
@@ -38,19 +39,17 @@ const Logs = () => {
 
     fetchLogs();
 
-    //suscribe to live logs
+    //an example of closer
+    //suscribe to live logs and store the return of subscribeToLiveLogs onto a variable unsubscribe
     const unsubscribe = MimicLogs.subscribeToLiveLogs(newLog => {
 
       //check if at bottom with latest log
       const logContainer = logContainerRef.current;
-
       // scrollTop= top of scrollBar
       // ClientHeight= height of div
       // Scroll height = height of scroll area 
       const atBottom = (logContainer.scrollTop + logContainer.clientHeight+100) >= logContainer.scrollHeight;
 
-
-  
       if(atBottom) setNewLogsCnt(0);
       else setNewLogsCnt((prev)=>prev+1);
 
@@ -63,12 +62,14 @@ const Logs = () => {
     };
   }, [searchParams]);
 
+
+  //this function and useEffect below used to fetch previous logs when the scroll bar is at the top
   const fetchPreviousLogs = async () => {
     try {
       setLoading(true);
       const oldestTimestamp = logs[0]?.timestamp;
       const previousLogs = await MimicLogs.fetchPreviousLogs({
-        startTs: oldestTimestamp - 1000 * 60 * 5, // Fetching logs prior to the oldest log timestamp
+        startTs: oldestTimestamp - 1000 * 60 * 5, // Fetching logs 5 minutes prior to the oldest log timestamp
         endTs: oldestTimestamp,
         limit: 5 
       });
@@ -83,6 +84,7 @@ const Logs = () => {
     }
   };
 
+
   useEffect(() => {
     const logContainer = logContainerRef.current;
 
@@ -92,7 +94,6 @@ const Logs = () => {
       const atTop = scrollTop === 0;
       
       
-      console.log("atTop",atTop)
       if (atTop && !loading) {
         fetchPreviousLogs();
       }
@@ -105,11 +106,12 @@ const Logs = () => {
     };
   }, [loading]); 
 
+
+  //this used used to 	Autoscroll for new logs if the user is positioned at the latest log line (user is at bottom).
   useEffect(() => {
     const logContainer = logContainerRef.current;
     // Check if user is at the bottom of the scrollable area
 
-    console.log(logContainer.scrollTop + logContainer.clientHeight,logContainer.scrollHeight);
     const atBottom = (logContainer.scrollTop + logContainer.clientHeight+100) >= logContainer.scrollHeight;
     
     console.log("atBottom",atBottom)
@@ -119,11 +121,12 @@ const Logs = () => {
     }
   }, [logs]);
 
-  const scrolToLatestLog=()=>
-  {
+  //this function is used to scroll to the latest log when the new log button is clicked
+  const scrolToLatestLog=()=>{
     const logContainer = logContainerRef.current;
     logContainer.scrollTop = logContainer.scrollHeight;
   }
+
   return (
     <div className='bg-white rounded-md border-2 border-gray-100 relative'>
       <div className='flex justify-end pb-2 pr-5'>

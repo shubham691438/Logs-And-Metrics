@@ -18,9 +18,7 @@ function App() {
     })
   }
 
-  // useEffect(()=>{
-  //   setChanges(searchParams.get('timeRange'),searchParams.get('time'));
-  // },[])
+  
 
   return (
     <div>
