@@ -8,7 +8,7 @@ function App() {
 
   //default time range 5 min and date as current date
    const [searchParams,setSearchParams]=useSearchParams({timeRange:5,time:Date.now()})
-
+  
   
   const setChanges=(timeRange,time)=>{
     setSearchParams((prev)=>{
